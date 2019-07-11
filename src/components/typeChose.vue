@@ -1,13 +1,13 @@
 <template>
 	<div class="typeChose">
 		<ul class="hairClosure">
-			<li v-for="h in this.hairClosureList" :price="h.Price">{{h.type}}</li>
+			<li v-for="(h,i) in this.hairClosureList" @click="choose(i,hairClosureList,1)" :class="{'choosed':n1==i}">{{h.type}}</li>
 		</ul>
-		<ul class="hairClosureLength">
-			<li v-for="h in this.hairClosureLength" :price="h.Price">{{h.length}}</li>
+		<ul class="hairClosureLength" >
+			<li v-for="(h,i) in this.hairClosureLength" @click="choose(i,hairClosureLength,2)" :class="{'choosed':n2==i}">{{h.length}}</li>
 		</ul>
 		<ul class="hairWeftLength">
-			<li v-for="h in this.hairWeftLengthList" :price="h.Price">{{h.length}}</li>
+			<li v-for="(h,i) in this.hairWeftLengthList" @click="choose(i,hairWeftLengthList,3)" :class="{'choosed':n3==i}">{{h.length}}</li>
 		</ul>
 
 		<p>{{thePrice*num}}</p>
@@ -23,13 +23,19 @@
 	export default {
 		data() {
 			return {
+				//属性列表
 				hairClosureList: {},
 				hairClosureLength: {},
 				hairWeftLengthList: {},
+				//属性价格
 				hairClosurePrice: 0,
 				hairClosureLengthPrice: 0,
 				hairWeftLengthPrice: 0,
-				num: 1
+				num: 1,
+				//属性选择
+				n1:-1,
+				n2:-1,
+				n3:-1
 			}
 		},
 		computed: {
@@ -38,36 +44,33 @@
 			}
 		},
 		methods: {
-			//另选中的标签样式改变，并将其属性价格进行传递并相加得到单个商品价格
-			choose: function(elements) {
-				let _this = this;
-				elements.on("click", function() {
-
-					elements.removeClass("choosed")
-					$(this).addClass("choosed");
-
-					if($(this).parent().attr("class") == "hairClosure") {
-						_this.hairClosurePrice = Number($(this).attr("price"));
-
-					} else if($(this).parent().attr("class") == "hairClosureLength") {
-						_this.hairClosureLengthPrice = Number($(this).attr("price"));
-
-					} else if($(this).parent().attr("class") == "hairWeftLength") {
-						_this.hairWeftLengthPrice = Number($(this).attr("price"));
-
-					}
-				})
+			//另选中的标签样式改变，并将其属性价格进行传递
+			//i表示是第几个标签被选中
+			//list表示该属性的列表
+			//n表示是哪个属性
+			choose: function(i,list,n) {
+				console.log(i,list,n)
+				if(n==1){
+					this.n1=i;
+					this.hairClosurePrice=list[i].Price;
+				}else if(n==2){
+					this.n2=i;
+					this.hairClosureLengthPrice=list[i].Price;
+				}else if(n==3){
+					this.n3=i;
+					this.hairWeftLengthPrice=list[i].Price;
+				}
+				
 			}
 		},
 		created() {
+			//将从父组件传递过来的数据赋值给当前组件的变量
 			this.hairClosureList = this.data.hairclosure;
 			this.hairClosureLength = this.data.hairclosurelength;
 			this.hairWeftLengthList = this.data.hairweftlength;
 		},
 		mounted() {
-			this.choose($(".hairClosure li"));
-			this.choose($(".hairClosureLength li"));
-			this.choose($(".hairWeftLength li"));
+
 		},
 		props: ["data"]
 	}

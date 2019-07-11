@@ -4,9 +4,8 @@
 		<v-swiper :data="this.pictureList"/><!--轮播图-->
 		<div class="con">
 			<v-section :list="this.list"></v-section><!--商品-->
-			<!--<v-section></v-section>
-			<v-section></v-section>
-			<v-section></v-section>-->
+			<v-section :list="this.list1"></v-section>
+			
 			<v-footnav></v-footnav>		<!--底部导航-->
 			<v-footer></v-footer>
 		</div>
@@ -34,6 +33,7 @@
 		data() {
 			return {
 				list: [1, 2, 3, 4, 5, 6],
+				list1:[2,2,2,2],
 				pictureList:[1,2,3,4,5]
 			}
 		},
@@ -57,7 +57,7 @@
 
 <style>
 	.home{
-		margin-top:1rem;
+		margin-top:2rem;
 	}
 	.navmenu{
 		position:fixed;

@@ -242,7 +242,7 @@
 	}
 	
 	.login {
-		margin: 1rem 0rem 0;
+		margin: 2rem 0rem 0;
 	}
 	
 	.notlogin {

@@ -48,6 +48,6 @@
 		z-index: 999;
 	}
 	.product{
-		margin-top:1rem;
+		margin-top:2rem;
 	}
 </style>

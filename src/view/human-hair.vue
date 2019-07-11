@@ -53,7 +53,7 @@
 
 <style>
 	.humanHair {
-		margin-top: 1rem;
+		margin-top: 2rem;
 	}
 	.navmenu {
 		position: fixed;

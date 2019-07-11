@@ -1,16 +1,32 @@
 <template>
 	<div class="navmenu">
-		<header>
+		<!--头部导航栏-->
+		<header :class="collapsed?'close':'open'">
 			<i class="el-icon-menu" @click="collapse"></i>
+			<i class="el-icon-user"></i>
+			<i class="el-icon-phone-outline"></i>
+			<img src="../assets/logo.png" />
+			<i class="el-icon-mobile-phone"></i>
+			<el-badge :value="12" class="item" style="float: left;">
+				<router-link :to="{name:'car'}">
+					<i class="el-icon-shopping-cart-2"></i>
+				</router-link>	
+			</el-badge>	
+			<i class="el-icon-search"></i>
 		</header>
-		<nav class="close">
+		<!--侧边导航栏-->
+		<nav :class="collapsed?'close':'open'">
+			<h2>new account</h2>
 
-			<el-menu :default-active="$route.path" class="el-menu-vertical-demo"  unique-opened router>
-				<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-					<el-menu-item :index="item.path"><i :class="item.iconCls"></i>{{item.name}}</el-menu-item>
+			<el-menu :default-active="$route.path" class="el-menu-vertical-demo" unique-opened router>
+				<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden" >
+					<el-menu-item :index="item.path" style="border-bottom: 1px solid #f6f6f6;"><i :class="item.iconCls"></i>{{item.name}}</el-menu-item>
 				</template>
 			</el-menu>
+			
+			<p class="back" @click="collapse"><i class="el-icon-close"></i></p>
 		</nav>
+		<!--遮罩层-->
 		<div class="Mask" v-show="!collapsed"></div>
 
 	</div>
@@ -25,36 +41,35 @@
 		},
 		methods: {
 			collapse: function() {
-				if(this.collapsed) {
-					document.getElementsByTagName("nav")[0].className = "open";
-					document.getElementsByTagName("header")[0].className = "open";
-				} else {
-					document.getElementsByTagName("nav")[0].className = "close";
-					document.getElementsByTagName("header")[0].className = "close";
-				}
-
 				this.collapsed = !this.collapsed;
 			}
 		},
 		mounted() {
-//			console.log(1,sessionStorage.getItem("user"),this.$store.state.isLogin,this.isLogin)
+		
 		},
 	}
 </script>
 
 <style lang="less" scoped>
-	i {
-		font-size: 0.5rem;
-		float: left;
-	}
 	
 	header {
 		position: absolute;
 		top: 0;
 		z-index: 1000;
-		height:1rem;
+		height: 2rem;
 		background: #409EFF;
-		width:10rem;
+		width: 10rem;
+	}
+	
+	header i {
+		font-size: 0.8rem;
+		padding: 0.2rem;
+	}
+	
+	header img {
+		height: 1rem;
+		width: 2.5rem;
+		
 	}
 	
 	header.open {
@@ -68,17 +83,25 @@
 		transition: margin 0.5s;
 		-webkit-transition: margin 0.5s;
 	}
-	
+	header>*{
+		margin:0.35rem 0 0 0;
+		float: left;
+	}
 	nav {
 		position: absolute;
 		top: 0;
 		width: 5rem;
 		height: 30rem;
-		background: red;
+		background: #fff;
 		z-index: 1000;
 		overflow: hidden;
 	}
-	
+	nav h2{
+		background: red;
+		margin: 0;
+		padding: 0.5rem;
+		width: 5rem;
+	}
 	.Mask {
 		width: 1000px;
 		height: 1000px;
@@ -98,5 +121,13 @@
 		width: 0rem;
 		transition: width 0.5s;
 		-webkit-transition: width 0.5s;
+		position: relative;
+	}
+	nav .back{
+		font-size:1rem ;
+		position: absolute;
+		top:0.5rem;
+		right:0rem;
+		
 	}
 </style>
